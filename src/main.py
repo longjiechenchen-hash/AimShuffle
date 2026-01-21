@@ -7,8 +7,16 @@ import pygame
 import sys
 import random
 import time
+import os
 from enum import Enum
+from pathlib import Path
 from audio import SoundManager
+
+# Detectar si se ejecuta desde PyInstaller
+if getattr(sys, 'frozen', False):
+    BASE_DIR = Path(sys._MEIPASS)
+else:
+    BASE_DIR = Path(__file__).parent.parent
 
 # Constantes
 WINDOW_WIDTH = 800
@@ -40,13 +48,20 @@ class ShuffleGame:
         pygame.init()
         self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
         pygame.display.set_caption("AimShuffle - Shuffle Table Game")
-        icon = pygame.image.load("assets/images/icon.png")
-        pygame.display.set_icon(icon)
+        
+        # Load icon - handle both exe and script execution
+        try:
+            icon_path = BASE_DIR / "assets" / "images" / "icon.png"
+            icon = pygame.image.load(str(icon_path))
+            pygame.display.set_icon(icon)
+        except Exception as e:
+            print(f"Warning: Could not load icon: {e}")
+        
         self.clock = pygame.time.Clock()
-        self.font_title = pygame.font.Font('assets/fonts/BitcountSingle_Roman-Bold.ttf', 60)
-        self.font_large = pygame.font.Font('assets/fonts/BitcountSingle-Bold.ttf', 40)
-        self.font_medium = pygame.font.Font('assets/fonts/Ubuntu-Regular.ttf', 32)
-        self.font_small = pygame.font.Font('assets/fonts/Ubuntu-Regular.ttf', 24)
+        self.font_title = pygame.font.Font(str(BASE_DIR / 'assets/fonts/BitcountSingle_Roman-Bold.ttf'), 60)
+        self.font_large = pygame.font.Font(str(BASE_DIR / 'assets/fonts/BitcountSingle-Bold.ttf'), 40)
+        self.font_medium = pygame.font.Font(str(BASE_DIR / 'assets/fonts/Ubuntu-Regular.ttf'), 32)
+        self.font_small = pygame.font.Font(str(BASE_DIR / 'assets/fonts/Ubuntu-Regular.ttf'), 24)
         
         # Initialize sound manager
         self.sound_manager = SoundManager()

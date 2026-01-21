@@ -5,19 +5,30 @@ Handles loading and playing sound effects
 
 import pygame
 import os
+import sys
+from pathlib import Path
+
+# Detectar si se ejecuta desde PyInstaller
+if getattr(sys, 'frozen', False):
+    BASE_DIR = Path(sys._MEIPASS)
+else:
+    BASE_DIR = Path(__file__).parent.parent
 
 class SoundManager:
     """Manage all sound effects for the game"""
     
-    def __init__(self, sounds_dir="assets/sounds", enabled=True):
+    def __init__(self, sounds_dir=None, enabled=True):
         """
         Initialize sound manager
         
         Args:
-            sounds_dir: Directory where sound files are stored
+            sounds_dir: Directory where sound files are stored (relative to BASE_DIR)
             enabled: Whether sounds are enabled
         """
-        self.sounds_dir = sounds_dir
+        if sounds_dir is None:
+            sounds_dir = "assets/sounds"
+        
+        self.sounds_dir = BASE_DIR / sounds_dir
         self.enabled = enabled
         self.sounds = {}
         
@@ -44,10 +55,10 @@ class SoundManager:
         }
         
         for sound_name, filename in sound_files.items():
-            filepath = os.path.join(self.sounds_dir, filename)
+            filepath = self.sounds_dir / filename
             try:
-                if os.path.exists(filepath):
-                    self.sounds[sound_name] = pygame.mixer.Sound(filepath)
+                if filepath.exists():
+                    self.sounds[sound_name] = pygame.mixer.Sound(str(filepath))
                     print(f"✓ Loaded sound: {sound_name}")
                 else:
                     print(f"⚠ Sound not found: {filepath}")
