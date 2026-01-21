@@ -26,6 +26,7 @@ def build():
         "--distpath=dist",
         "--workpath=build",
         "--specpath=.",
+        "--add-data=assets:assets",
         "src/main.py"
     ]
     
