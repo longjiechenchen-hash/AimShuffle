@@ -25,22 +25,15 @@ def generate_click_sound(filename, sample_rate=44100):
     print(f"Generated: {filename}")
 
 def generate_success_sound(filename, sample_rate=44100):
-    """Generate a success/victory sound"""
-    # Two ascending beeps
-    beep1 = generate_tone(523, 0.1, sample_rate)  # C5
-    beep2 = generate_tone(659, 0.1, sample_rate)  # E5
-    beep3 = generate_tone(784, 0.2, sample_rate)  # G5
+    """Generate a success/victory sound - simple clean tones"""
+    # Three ascending beeps - no envelope or modifications
+    beep1 = generate_tone(523, 0.15, sample_rate)  # C5
+    beep2 = generate_tone(659, 0.15, sample_rate)  # E5
+    beep3 = generate_tone(784, 0.15, sample_rate)  # G5
     
-    # Concatenate
+    # Concatenate directly without modifications
     success = np.concatenate([beep1, beep2, beep3])
     
-    # Add envelope
-    envelope = np.concatenate([
-        np.linspace(1, 0.8, len(beep1)),
-        np.linspace(0.8, 0.9, len(beep2)),
-        np.linspace(0.9, 0, len(beep3))
-    ])
-    success = (success * envelope).astype(np.int16)
     wavfile.write(filename, sample_rate, success)
     print(f"Generated: {filename}")
 
@@ -81,7 +74,7 @@ if __name__ == "__main__":
     print("Generating sound effects...\n")
     
     # Generate all sounds
-    generate_click_sound(os.path.join(sounds_dir, "click.wav"))
+    #generate_click_sound(os.path.join(sounds_dir, "click.wav"))  # Using existing click.wav
     generate_success_sound(os.path.join(sounds_dir, "success.wav"))
     generate_start_sound(os.path.join(sounds_dir, "start.wav"))
     generate_game_over_sound(os.path.join(sounds_dir, "game_over.wav"))

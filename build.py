@@ -24,7 +24,7 @@ def build():
         "--windowed",
         "--name=AimShuffle",
         "--distpath=dist",
-        "--buildpath=build",
+        "--workpath=build",
         "--specpath=.",
         "src/main.py"
     ]

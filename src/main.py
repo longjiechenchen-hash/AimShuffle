@@ -61,7 +61,7 @@ class ShuffleGame:
         self.grid = []
         self._create_grid()
         
-        self.current_number = 1
+        self.current_number = 0
         self.start_time = None
         self.elapsed_time = 0
         self.game_over = False
@@ -95,14 +95,14 @@ class ShuffleGame:
                 if (cell['x'] <= x <= cell['x'] + cell['width'] and
                     cell['y'] <= y <= cell['y'] + cell['height']):
                     
-                    if not cell['clicked'] and cell['number'] == self.current_number:
+                    if not cell['clicked'] and cell['number'] == self.current_number+1:
                         cell['clicked'] = True
                         self.current_number += 1
                         
                         # Play click sound
                         self.sound_manager.play('click')
                         
-                        if self.current_number > 25:
+                        if self.current_number >= 25:
                             self.game_over = True
                             self.state = GameState.GAME_OVER
                             # Play game over sound

@@ -141,8 +141,6 @@ python build.py
 
 - [ ] Sistema de puntuaciones global
 - [ ] Diferentes modos de dificultad
-- [ ] Sonidos y efectos visuales
-- [ ] Multiplayer competitivo
 - [ ] Estadísticas de rendimiento
 - [ ] Temas visuales
 
