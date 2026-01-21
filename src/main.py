@@ -40,11 +40,13 @@ class ShuffleGame:
         pygame.init()
         self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
         pygame.display.set_caption("AimShuffle - Shuffle Table Game")
+        icon = pygame.image.load("assets/images/icon.png")
+        pygame.display.set_icon(icon)
         self.clock = pygame.time.Clock()
-        self.font_title = pygame.font.Font(None, 60)
-        self.font_large = pygame.font.Font(None, 40)
-        self.font_medium = pygame.font.Font(None, 32)
-        self.font_small = pygame.font.Font(None, 24)
+        self.font_title = pygame.font.Font('assets/fonts/BitcountSingle_Roman-Bold.ttf', 60)
+        self.font_large = pygame.font.Font('assets/fonts/BitcountSingle-Bold.ttf', 40)
+        self.font_medium = pygame.font.Font('assets/fonts/Ubuntu-Regular.ttf', 32)
+        self.font_small = pygame.font.Font('assets/fonts/Ubuntu-Regular.ttf', 24)
         
         # Initialize sound manager
         self.sound_manager = SoundManager()
@@ -127,7 +129,7 @@ class ShuffleGame:
         self.screen.blit(subtitle, subtitle_rect)
         
         # Sound status
-        sound_status = "🔊 ON" if self.sound_manager.enabled else "🔇 OFF"
+        sound_status = "ON" if self.sound_manager.enabled else "OFF"
         sound_text = self.font_small.render(f"Sound: {sound_status} (Press M to toggle)", True, BLUE)
         sound_rect = sound_text.get_rect(bottomleft=(40 , WINDOW_HEIGHT - 20))
         self.screen.blit(sound_text, sound_rect)
